@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.grobid.core.data.Acknowledgement;
 import org.grobid.core.factory.AbstractEngineFactory;
 import org.grobid.core.utilities.GrobidProperties;
 import org.grobid.core.engines.Engine;
@@ -44,6 +45,7 @@ public class GrobidRestService implements GrobidPaths {
     private static final String DATE = "date";
     private static final String AFFILIATIONS = "affiliations";
     private static final String CITATION = "citations";
+    private static final String ACKNOWLEDGMENT = "acknowledgment";
 //    private static final String TEXT = "text";
     private static final String SHA1 = "sha1";
     private static final String XML = "xml";
@@ -426,6 +428,17 @@ public class GrobidRestService implements GrobidPaths {
     @PUT
     public Response processAffiliations(@FormParam(AFFILIATIONS) String affiliation) {
         return restProcessString.processAffiliations(affiliation);
+    }
+
+    /**
+     * @see org.grobid.service.process.GrobidRestProcessString#processAffiliations(String)
+     */
+    @Path(PATH_ACKNOWLEDGMENT)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.TEXT_PLAIN)
+    @POST
+    public Response processAcknowledgment(@FormParam(ACKNOWLEDGMENT) String acknowledgment) {
+        return restProcessString.processAcknowledgments(acknowledgment);
     }
 
     @Path(PATH_CITATION)

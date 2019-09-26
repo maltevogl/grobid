@@ -15,6 +15,7 @@ import java.io.IOException;
 public class EngineParsers implements Closeable {
     public static final Logger LOGGER = LoggerFactory.getLogger(EngineParsers.class);
 
+    private AcknowledgementParser acknowledgementParser = null;
     private AuthorParser authorParser = null;
     private AffiliationAddressParser affiliationAddressParser = null;
     private HeaderParser headerParser = null;
@@ -38,6 +39,17 @@ public class EngineParsers implements Closeable {
             }
         }
         return affiliationAddressParser;
+    }
+
+    public AcknowledgementParser getAcknowledgementParser() {
+        if (acknowledgementParser == null) {
+            synchronized (this) {
+                if (acknowledgementParser == null) {
+                    acknowledgementParser = new AcknowledgementParser();
+                }
+            }
+        }
+        return acknowledgementParser;
     }
 
     public AuthorParser getAuthorParser() {
@@ -204,6 +216,12 @@ public class EngineParsers implements Closeable {
             affiliationAddressParser.close();
             affiliationAddressParser = null;
             LOGGER.debug("CLOSING affiliationAddressParser");
+        }
+
+        if (acknowledgementParser != null) {
+            acknowledgementParser.close();
+            acknowledgementParser = null;
+            LOGGER.debug("CLOSING acknowledgementParser");
         }
 
         if (headerParser != null) {

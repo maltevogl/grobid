@@ -20,6 +20,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import org.grobid.core.data.Affiliation;
+import org.grobid.core.data.Acknowledgement;
 import org.grobid.core.data.BibDataSet;
 import org.grobid.core.data.BiblioItem;
 import org.grobid.core.data.BiblioSet;
@@ -132,6 +133,19 @@ public class Engine implements Closeable {
             results.add(localRes);
         }
         return results;
+    }
+
+    /**
+     * Parse a list of text blocks corresponding to an acknowledgment+address.
+     *
+     * @param acknowledgementBlock - the list of strings corresponding each to a raw
+     *                      acknowledgment+address.
+     * @return the list of all recognized structured acknowledgment objects for
+     *         each sequence of acknowledgment + address block.
+     */
+    public List<Acknowledgement> processAcknowledgments(String acknowledgementBlock) throws Exception {
+        List<Acknowledgement> result = parsers.getAcknowledgementParser().processing(acknowledgementBlock);
+        return result;
     }
 
     /**

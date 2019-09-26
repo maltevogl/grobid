@@ -17,8 +17,8 @@ public class FieldSpecification {
 	public List<String> cerminePath = new ArrayList<String>();
 	
 	public boolean isTextual = false;
-	
-	/** 
+
+    /**
 	 *  This static method instanciates the fields with the appropriate paths
 	 *  in the different gold and extraction formats. 
 	*/  
@@ -90,6 +90,11 @@ public class FieldSpecification {
 		affiliationField.pdfxPath.add("/pdfx/article/front/contrib-group");
 		//headerFields.add(affiliationField);
 		//headerLabels.add("affiliations");
+
+        // acknowledgement
+        FieldSpecification acknowledgmentField  = new FieldSpecification();
+        acknowledgmentField.fieldName = "acknowledgements";
+        acknowledgmentField.isTextual = true;
 
 		// date
 		FieldSpecification dateField = new FieldSpecification();
